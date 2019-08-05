@@ -1,6 +1,26 @@
+runcharts:
+  - title: Reponse Times (Popular Sites)
+    position: [[40, 0], [40, 17]]
+    rate-ms: 200
+    items:
+      - label: Stack Overflow
+        color: 202
+        sample: ping -c 4 www.stackoverflow.com | tail -1| awk '{print $4}' | cut
+            -d '/' -f 2
+      - label: Github
+        color: 154
+        sample: ping -c 4 www.github.com | tail -1| awk '{print $4}' | cut -d '/'
+            -f 2
+      - label: Twitter
+        sample: ping -c 4 www.twitter.com | tail -1| awk '{print $4}' | cut -d '/'
+            -f 2
+      - label: Google
+        color: 63
+        sample: ping -c 4 www.google.com | tail -1| awk '{print $4}' | cut -d '/'
+            -f 2
 barcharts:
-  - title: Local network activity
-    position: [[0, 8], [40, 8]]
+  - title: Local Network Activity
+    position: [[0, 0], [40, 8]]
     rate-ms: 500
     scale: 0
     items:
@@ -13,33 +33,31 @@ barcharts:
       - label: TCP bytes out
         sample: nettop -J bytes_out -l 1 -m tcp | awk '{sum += $4} END {print sum}'
 sparklines:
-  - title: CPU usage
-    position: [[17, 16], [16, 9]]
+  - title: CPU Usage
+    position: [[20, 8], [20, 15]]
     rate-ms: 200
     scale: 0
     sample: ps -A -o %cpu | awk '{s+=$1} END {print s}'
-  - title: Free memory pages
-    position: [[0, 16], [17, 9]]
+  - title: Free Memory Pages
+    position: [[0, 8], [20, 15]]
     rate-ms: 200
     scale: 0
     sample: memory_pressure | grep 'Pages free' | awk '{print $3}'
 textboxes:
-  - title: Docker containers stats
-    position: [[0, 32], [80, 8]]
+  - title: Docker Container Statistics
+    position: [[0, 23], [52, 8]]
     sample: docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"
+  - title: Local weather
+    position: [[40, 17], [12, 6]]
+    rate-ms: 10000
+    color: 178
+    sample: curl wttr.in?0ATQF
+    border: true
 asciiboxes:
   - title: Current Time
-    position: [[100, 0], [100, 8]]
+    position: [[52, 17], [28, 6]]
     rate-ms: 500
-    color: 43
+    color: 135
     sample: env TZ=CST6CDT date +%r
-    border: false
-    font: 3d
-runcharts:
-  - title: Reponse Times (Popular Sites)
-    rate-ms: 200
-    items: 
-      - label: Stack Overflow
-        sample: ping -c 4 www.stackoverflow.com | tail -1| awk '{print $4}' | cut -d '/' -f 2
-      - label: Github
-        sample: ping -c 4 www.github.com | tail -1| awk '{print $4}' | cut -d '/' -f 2
+    border: true
+    font: 2d
