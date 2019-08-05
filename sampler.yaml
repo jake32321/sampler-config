@@ -1,6 +1,6 @@
 barcharts:
   - title: Local network activity
-    position: [[0, 0], [80, 8]]
+    position: [[0, 8], [40, 8]]
     rate-ms: 500
     scale: 0
     items:
@@ -14,16 +14,32 @@ barcharts:
         sample: nettop -J bytes_out -l 1 -m tcp | awk '{sum += $4} END {print sum}'
 sparklines:
   - title: CPU usage
-    position: [[40, 8], [40, 24]]
+    position: [[17, 16], [16, 9]]
     rate-ms: 200
     scale: 0
     sample: ps -A -o %cpu | awk '{s+=$1} END {print s}'
   - title: Free memory pages
-    position: [[0, 8], [40, 24]]
+    position: [[0, 16], [17, 9]]
     rate-ms: 200
     scale: 0
     sample: memory_pressure | grep 'Pages free' | awk '{print $3}'
 textboxes:
   - title: Docker containers stats
-    position: []
+    position: [[0, 32], [80, 8]]
     sample: docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"
+asciiboxes:
+  - title: Current Time
+    position: [[100, 0], [100, 8]]
+    rate-ms: 500
+    color: 43
+    sample: env TZ=CST6CDT date +%r
+    border: false
+    font: 3d
+runcharts:
+  - title: Reponse Times (Popular Sites)
+    rate-ms: 200
+    items: 
+      - label: Stack Overflow
+        sample: ping -c 4 www.stackoverflow.com | tail -1| awk '{print $4}' | cut -d '/' -f 2
+      - label: Github
+        sample: ping -c 4 www.github.com | tail -1| awk '{print $4}' | cut -d '/' -f 2
